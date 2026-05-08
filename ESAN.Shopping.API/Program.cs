@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UESAN.SHOPPING.CORE.core.Entities;
+using UESAN.SHOPPING.CORE.infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ var _config = builder.Configuration;
 var cnx = _config.GetConnectionString("DevConnection");
 builder.Services.AddDbContext<logisticaBDContext>(options => options.UseSqlServer(cnx));
 
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

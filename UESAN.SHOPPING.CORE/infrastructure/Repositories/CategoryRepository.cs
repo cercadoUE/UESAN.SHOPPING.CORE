@@ -19,35 +19,44 @@ namespace UESAN.SHOPPING.CORE.infrastructure.Repositories
         {
             return await _context.Categories.ToListAsync();
         }
+
         public async Task<Category> GetCategoryById(int id)
         {
             return await _context.Categories.Where(c => c.Id == id).FirstOrDefaultAsync();
         }
 
-        //UpdateCategory: Este método actualiza una categoría existente en la base de datos. Primero, busca la categoría por su ID. Si la categoría existe, actualiza su descripción y guarda los cambios en la base de datos.
+        // InsertCategory: Inserta una nueva categoría en la base de datos.
+        public async Task InsertCategory(Category category)
+        {
+            if (category == null) throw new ArgumentNullException(nameof(category));
+
+            if (category.IsActive == null)
+                category.IsActive = true;
+
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
+        }
+
+        // UpdateCategory: Actualiza una categoría existente.
         public async Task UpdateCategory(Category category)
         {
             var existingCategory = await _context.Categories.Where(c => c.Id == category.Id).FirstOrDefaultAsync();
             if (existingCategory != null)
             {
-
                 existingCategory.Description = category.Description;
+                // existingCategory.IsActive = category.IsActive; // activar si quieres permitir actualizar IsActive
                 await _context.SaveChangesAsync();
             }
         }
 
-
-        //DeleteCategory: Este método marca una categoría como inactiva en lugar de eliminarla físicamente de la base de datos. Busca la categoría por su ID y, si la encuentra, establece su propiedad IsActive en false y guarda los cambios.
-
+        // DeleteCategory: Marca una categoría como inactiva.
         public async Task DeleteCategory(int id)
         {
+            var existingcategory = await _context.Categories.Where(c => c.Id == id).FirstOrDefaultAsync();
+            if (existingcategory != null)
             {
-                var existingcategory = await _context.Categories.Where(c => c.Id == id).FirstOrDefaultAsync();
-                if (existingcategory != null)
-                {
-                    existingcategory.IsActive = false;
-                    await _context.SaveChangesAsync();
-                }
+                existingcategory.IsActive = false;
+                await _context.SaveChangesAsync();
             }
         }
     }
