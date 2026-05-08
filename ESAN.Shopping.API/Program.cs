@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using UESAN.SHOPPING.CORE.core.Entities;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+var _config = builder.Configuration;
+var cnx = _config.GetConnectionString("DevConnection");
+builder.Services.AddDbContext<logisticaBDContext>(options => options.UseSqlServer(cnx));
 
 var app = builder.Build();
 

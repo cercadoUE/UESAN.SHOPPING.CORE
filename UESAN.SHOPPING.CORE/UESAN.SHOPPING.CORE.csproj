@@ -25,7 +25,6 @@
     <Folder Include="core\Interfaces\" />
     <Folder Include="core\Settings\" />
     <Folder Include="core\Services\" />
-    <Folder Include="infrastructure\" />
   </ItemGroup>
 
 </Project>
