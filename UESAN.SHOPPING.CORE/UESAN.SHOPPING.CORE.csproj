@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="core\DTOs\" />
     <Folder Include="core\Entities\" />
-    <Folder Include="core\Interfaces\" />
     <Folder Include="core\Settings\" />
     <Folder Include="core\Services\" />
   </ItemGroup>
